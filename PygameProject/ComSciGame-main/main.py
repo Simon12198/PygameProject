@@ -62,7 +62,7 @@ def logo(img, x, y):
     screen.blit(img, (x,y))
 menu_mode = "main"
 clicked = False
-time = 3500
+time = 2000
 screenswitch = pygame.USEREVENT + 0
 finished_switch = pygame.USEREVENT + 1
 pygame.time.set_timer(finished_switch, time)
@@ -89,7 +89,7 @@ while True:
             if e.key == K_ESCAPE and state == EASTEREGG:
                 state = EEPAUSE
             if e.type == KEYUP:
-                 if e.key == K_SPACE:
+                if e.key == K_SPACE:
                     level.button_released()
             if state == STARTSCREEN:
                 if pygame.key.get_pressed():
