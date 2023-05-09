@@ -149,21 +149,22 @@ class Level:
                     player.rect.left = tile.rect.right
                     self.collision_types['left'] = True
         for slopes in self.slopesgroup.sprites():
+            TOP, WALKABLE = 0, 1
+            slope_type = TOP
             if slopes.rect.colliderect(player.rect):
                 if pygame.sprite.collide_mask(player, slopes):
-                    if player.rect.bottom <= slopes.rect.top and self.player_on_slope == False:
-                        self.player_on_slope = False
-                    if player.rect.top < slopes.rect.bottom and player.rect.bottom > slopes.rect.bottom:
-                        player.rect.top = slopes.rect.bottom + 1
+                    if slopes.rect.top < player.rect.top and slope_type == TOP:
+                        player.rect.top = slopes.rect.bottom
                         self.player_on_slope = True
-                    elif player.rect.bottom > slopes.rect.top and player.rect.top < slopes.rect.top:
-                        player.rect.bottom = slopes.rect.top - 1
+                        player.vertical_momentum = 0
+                    elif player.rect.bottom > slopes.rect.top > player.rect.top and self.player_on_slope == False:
+                        player.rect.bottom = slopes.rect.top
                         self.player_on_slope = True
-                    elif player.rect.left < slopes.rect.right and player.rect.right > slopes.rect.right:
-                        player.rect.left = slopes.rect.right
+                    elif player.rect.left < slopes.rect.right < player.rect.right and self.player_on_slope == True:
+                        player.rect.bottomleft = slopes.rect.topright
                         self.player_on_slope = False
-                    elif player.rect.right > slopes.rect.left and player.rect.left < slopes.rect.left:
-                        player.rect.right = slopes.rect.left
+                    elif player.rect.bottomright == slopes.rect.midleft and self.player_on_slope == True:
+                        player.rect.bottomright = slopes.rect.topleft
                         self.player_on_slope = False
             else:
                 self.player_on_slope = False
